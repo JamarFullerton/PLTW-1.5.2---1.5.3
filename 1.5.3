@@ -1,0 +1,15 @@
+#PLTW-1.5.2---1.5.3
+import math
+def animate():
+    velocity_x = speed_intvar.get() * math.cos(direction) # adj = hyp*cos()
+    velocity_y = speed_intvar.get() * math.sin(direction) # opp = hyp*sin()
+    canvas.move(circle_item, velocity_x, velocity_y)
+    x1, y1, x2, y2 = canvas.coords(circle_item)
+    global direction
+    if x2>canvas.winfo_width() orx1<0: # If crossing left or right of canvas
+        direction = math.pi - direction # Reverse the x-component of velocity
+    if y2>canvas.winfo_height() or y1<0:# If crossing top or bottom of canvas
+        direction = -1 * direction # Reverse the y-component of velocity
+    # Repeat with indirect tail recursion
+    canvas.after(1, animate)
+animate()# call the "handler" directly the first time to startrecursive calls
